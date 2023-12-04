@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../dist/output.css" />
+    <script src="../dist/index.js" defer></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="setTimer(0, 20);">create timer</button>
+    <input> 
+    <form onsubmit="javascript:setTimer(0, time.value); return false;"> 
+      <input type="text" name="time" placeholder="Time: seconds"> 
+      <input type="submit" name="submit" value="update">
+    </form>
+    <div id="timer"></div>
+  </body>
+</html>
