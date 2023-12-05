@@ -1,11 +1,23 @@
-function setTimer(count: number, time: number) {
-  console.log('executed');
+let pause = false;
+this.addEventListener('keypress', event => {
+  if (event.key === ' ' || event.key === 'Enter') {
+    if (pause)
+    pause = !pause;
+  }
+})
+
+async function setTimer(time: number) {
   let time_element = document?.getElementById('time-text');
-  if (count > time) return;
   if (time_element != null) {
-    time_element.innerText = Math.floor(time / 60).toLocaleString('en-Us' , {minimumIntegerDigits: 2})
-     + ':' + (time % 60).toLocaleString('en-Us' , {minimumIntegerDigits: 2});
-    setTimeout(() => setTimer(count, time - 1), 1000);
+    let i = 0;
+    while (i < time) {
+      time_element.innerText = Math.floor((time - i) / 60)
+      .toLocaleString('en-Us' , {minimumIntegerDigits: 2})
+      + ':' + ((time - i) % 60).toLocaleString('en-Us' , {minimumIntegerDigits: 2});
+      const timer = new Promise(res => setTimeout(res, 1000));
+      await timer;
+      i++;
+    }
   }
 }
 
