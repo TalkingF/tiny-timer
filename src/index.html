@@ -13,12 +13,12 @@
 
   </head>
   <body class="bg-cyan-600">
-    <form onsubmit="javascript:setTimer(0, time.value); return false;" autocomplete="off"> 
+    <form onsubmit="javascript:setTimer(0, time.value * 60); return false;" autocomplete="off"> 
       <input type="text" name="time" placeholder="Time: seconds"> 
       <input type="submit" name="submit" value="update">
     </form>
-    <div id="timer" class="rounded-xl bg-cyan-500 max-w-sm mx-auto">
-      <p class="mx-auto flex justify-center font-medium text-white">00:00</p>
+    <div class="rounded-xl bg-cyan-500 max-w-sm mx-auto flex items-center">
+      <p id="time-text"class="mx-auto flex justify-center font-medium text-white text-9xl">00:00</p>
     </div>
   </body>
 </html>
