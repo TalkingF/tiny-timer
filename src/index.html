@@ -14,11 +14,18 @@
   </head>
   <body class="bg-cyan-600">
     <form onsubmit="javascript:setTimer(time.value * 60); return false;" autocomplete="off"> 
-      <input type="text" name="time" placeholder="Time: seconds"> 
+      <input type="text" name="time" placeholder="Time: Minutes"> 
       <input type="submit" name="submit" value="update">
     </form>
-    <div class="rounded-xl bg-cyan-500 max-w-sm mx-auto flex items-center">
-      <p id="time-text"class="mx-auto flex justify-center font-medium text-white text-9xl">00:00</p>
+    <div class="max-w-sm mx-auto">
+      <div class="rounded-xl bg-cyan-500 ">
+        <p id="time-text"class="mx-auto flex justify-center font-medium text-white text-9xl">00:00</p>
+      </div>
+      <div class="flex gap-x-32 h-24 rounded-xl bg-cyan-500 mt-8">
+        <button class="flex-1 rounded-xl bg-green-600 ml-4 m-4" >PL/PA</button>
+        <button class="flex-1 rounded-xl bg-red-600 mr-4 m-4">FINISH</button>
+      </div>
     </div>
+
   </body>
 </html>
