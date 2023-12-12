@@ -1,5 +1,9 @@
-let pause = false;
-let time = 0;
+//global variables
+let pause = false; //pause state
+let time = 0; //time (stored in seconds)
+
+/*Changes pause and stores time when paused. Will create a new timer when unpaused
+using existing time stored in global variables.*/
 function changePauseState() {
   if (pause) {
     pause = false;
@@ -9,6 +13,8 @@ function changePauseState() {
   
 }
 
+/*async function that decreases time by 1 every second and renders to DOM.
+Function aslso checks pause global variable as changed in changePauseState*/ 
 async function setTimer(time_length: number) {
   time = time_length;
   let time_element = document?.getElementById('time-text');
@@ -23,4 +29,6 @@ async function setTimer(time_length: number) {
     }
   }
 }
+
+
 
