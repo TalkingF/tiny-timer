@@ -13,16 +13,14 @@ function changePauseState() {
   
 }
 
-/*async function that decreases time by 1 every second and renders to DOM.
+/*async function that decreases time by 1 every second and calls renderTime.
 Function aslso checks pause global variable as changed in changePauseState*/ 
 async function setTimer(time_length: number) {
   time = time_length;
   let time_element = document?.getElementById('time-text');
   if (time_element != null) {
     while (time > 0 && !pause) {
-      time_element.innerText = Math.floor((time) / 60)
-      .toLocaleString('en-Us' , {minimumIntegerDigits: 2})
-      + ':' + ((time) % 60).toLocaleString('en-Us' , {minimumIntegerDigits: 2});
+      renderTime();
       const timer = new Promise(res => setTimeout(res, 1000));
       await timer;
       time--;
@@ -33,11 +31,19 @@ async function setTimer(time_length: number) {
 //function to be called when time is finished to handle future events
 function endTime() {
   time = 0;
+  renderTime();
+}
+
+/*renders the value of (global variable) to DOM in correct time format.
+Returns false if div containing time can not be found*/
+function renderTime() {
   let time_element = document?.getElementById('time-text');
   if (time_element != null) {
     time_element.innerText = Math.floor((time) / 60)
     .toLocaleString('en-Us' , {minimumIntegerDigits: 2})
     + ':' + ((time) % 60).toLocaleString('en-Us' , {minimumIntegerDigits: 2});
+    return true;
   }
+  return false;
 }
 
