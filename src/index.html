@@ -13,10 +13,10 @@
   </head>
   <body class="bg-cyan-600">
     <div class="max-w-sm mx-auto">
-      <div class="h-24 rounded-xl bg-cyan-500 mt-8">
-        <form onsubmit="javascript:setTimer(time.value * 60); return false;" autocomplete="off" class="flex items-center justify-center gap-x-12"> 
+      <div class="h-24 rounded-xl bg-cyan-500 mt-8 mx-auto flex justify-center">
+        <form autocomplete="off" class="flex items-center justify-center gap-x-12"> 
           <input type="text" name="time" placeholder="Time: Minutes" class="rounded-lg h-10"> 
-          <input type="submit" name="submit" value="C" class=" rounded-full bg-green-600 h-10 w-10">
+          <input type="button" name="submitbtn" value="C" onclick="setTimer(time.value * 60);" class=" rounded-full bg-green-600 h-10 w-10">
         </form>
       </div>
       <div class="rounded-xl bg-cyan-500 mt-8 ">
