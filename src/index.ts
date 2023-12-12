@@ -30,5 +30,14 @@ async function setTimer(time_length: number) {
   }
 }
 
-
+//function to be called when time is finished to handle future events
+function endTime() {
+  time = 0;
+  let time_element = document?.getElementById('time-text');
+  if (time_element != null) {
+    time_element.innerText = Math.floor((time) / 60)
+    .toLocaleString('en-Us' , {minimumIntegerDigits: 2})
+    + ':' + ((time) % 60).toLocaleString('en-Us' , {minimumIntegerDigits: 2});
+  }
+}
 
