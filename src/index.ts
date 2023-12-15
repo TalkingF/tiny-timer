@@ -32,6 +32,7 @@ async function setTimer(time_length: number) {
 function endTime() {
   time = 0;
   renderTime();
+  pause = true;
 }
 
 /*renders the value of (global variable) to DOM in correct time format.
