@@ -60,3 +60,9 @@ function changeTime(magnitude: number) {
   renderTime();
 }
 
+//onclick function similar to changeTime but sets time to value rather than changing by value.
+function setTime(value: number) {
+  time = value;
+  renderTime();
+}
+
