@@ -51,19 +51,26 @@ function renderTime() {
 /*onlcick function for setting length of timer, ensures that time stays within bounds.
 Calls renderTimer for visual feedback after updating time.*/
 function changeTime(magnitude: number) {
-  if ((time + magnitude) > 5999) { //max time supported (99:59)
-    time = 5999;
+  //will only change time while timer is paused
+  if (pause === true) {
+    if ((time + magnitude) > 5999) { //max time supported (99:59)
+      time = 5999;
+    }
+    else if (time + magnitude < 0) { //minimum time supported (00:00)
+      time = 0;
+    }
+    else time += magnitude;
+    renderTime();
   }
-  else if (time + magnitude < 0) { //minimum time supported (00:00)
-    time = 0;
-  }
-  else time += magnitude;
-  renderTime();
+
 }
 
 //onclick function similar to changeTime but sets time to value rather than changing by value.
 function setTime(value: number) {
-  time = value;
-  renderTime();
+  //set time only if timer is paused
+  if (pause === true) {
+    time = value;
+    renderTime();
+  }
 }
 
