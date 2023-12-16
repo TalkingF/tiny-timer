@@ -12,18 +12,18 @@
 
   </head>
   <body class="bg-cyan-600 text-white font-medium">
-    <div class="max-w-md mx-auto">
+    <div id="time-and-category" class="max-w-md mx-auto">
       <div class="h-32 rounded-xl bg-cyan-500 mt-8 grid grid-cols-2 gap-x-6 mx-auto">
-        <button class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(60);">
+        <button id="um-cat1" class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(60);">
           <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="#a5f4fc" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.586 3l-6.586 6.586a2 2 0 0 0 -.434 2.18l.068 .145a2 2 0 0 0 1.78 1.089h2.586v5a1 1 0 0 0 1 1h6l.117 -.007a1 1 0 0 0 .883 -.993l-.001 -5h2.587a2 2 0 0 0 1.414 -3.414l-6.586 -6.586a2 2 0 0 0 -2.828 0z" stroke-width="0" fill="#a5f4fc" /><path d="M15 20a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="#a5f4fc" /></svg>  
         </button>
-        <button class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(1);">
+        <button id="us-cat2" class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(1);">
           <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="#a5f4fc" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.586 3l-6.586 6.586a2 2 0 0 0 -.434 2.18l.068 .145a2 2 0 0 0 1.78 1.089h2.586v5a1 1 0 0 0 1 1h6l.117 -.007a1 1 0 0 0 .883 -.993l-.001 -5h2.587a2 2 0 0 0 1.414 -3.414l-6.586 -6.586a2 2 0 0 0 -2.828 0z" stroke-width="0" fill="#a5f4fc" /><path d="M15 20a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="#a5f4fc" /></svg>  
         </button>
-        <button class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
+        <button id="dm-cat3" class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
           <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-down-line-filled" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="#a5f4fc" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5l-.117 .007a1 1 0 0 0 -.883 .993v4.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-4.999a1 1 0 0 0 -1 -1h-6z" stroke-width="0" fill="#a5f4fc" /><path d="M15 2a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="#a5f4fc" /></svg>
         </button>
-        <button class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-1);">
+        <button id="ds-cat4" class="bg-cyan-800 bg-opacity-30 m-2 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-1);">
           <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-down-line-filled" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="#a5f4fc" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5l-.117 .007a1 1 0 0 0 -.883 .993v4.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-4.999a1 1 0 0 0 -1 -1h-6z" stroke-width="0" fill="#a5f4fc" /><path d="M15 2a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="#a5f4fc" /></svg>
         </button>
       </div>
