@@ -8,6 +8,16 @@ let current_state = State.Timer; //state of application
 let pause = true; //pause state
 let time = 0; //time (stored in seconds)
 
+//function to modify appearance of webpage when the pause state is changed.
+function renderPause() {
+  const play_element = document.getElementById('play-pause');
+  if (pause === true && play_element != null) {
+    play_element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" stroke-width="0" fill="#ffffff" /></svg>`;
+  } else if (pause === false && play_element != null) {
+    play_element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="#ffffff" /><path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="#ffffff" /></svg>`;
+  }
+}
+
 /*Changes pause and stores time when paused. Will create a new timer when unpaused
 using existing time stored in global variables.*/
 function changePauseState() {
@@ -15,6 +25,7 @@ function changePauseState() {
     pause = false;
     setTimer(time);
   } else pause = true;
+  renderPause();
 }
 
 /*async function that decreases time by 1 every second and calls renderTime.
