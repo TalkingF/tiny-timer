@@ -1,6 +1,13 @@
+enum State {
+  Timer, 
+  Tasks,
+}
+
 //global variables
+let current_state = State.Timer; //state of application
 let pause = true; //pause state
 let time = 0; //time (stored in seconds)
+
 
 /*Changes pause and stores time when paused. Will create a new timer when unpaused
 using existing time stored in global variables.*/
@@ -73,4 +80,7 @@ function setTime(value: number) {
     renderTime();
   }
 }
+
+
+
 
