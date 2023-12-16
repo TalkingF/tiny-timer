@@ -131,11 +131,21 @@ function switchChangeTimeandCategory() {
     }
   }
 }
+//function to modify appearance of webpage when the timer/task state is changed.
+function renderState() {
+  const state_element = document.getElementById('timer-task');
+  if (current_state === State.Timer && state_element != null) {
+    state_element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M12 10l0 3l2 0" /><path d="M7 4l-2.75 2" /><path d="M17 4l2.75 2" /></svg>`;
+  }
+  else if (current_state === State.Tasks && state_element != null) {
+    state_element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" /><path d="M13 8l2 0" /><path d="M13 12l2 0" /></svg>`;
+  }
+}
 
 /*switchState is responsible for switching state betweeb timer and tasks and is an onclick function.
 The function dispatches several functions responsible for changing the state of each component.*/
 function switchState() {
   current_state = (current_state + 1) % 2;
-  console.log(current_state);
+  renderState();
   switchChangeTimeandCategory();
 }
