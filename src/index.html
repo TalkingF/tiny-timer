@@ -30,9 +30,10 @@
       <div class="rounded-xl bg-cyan-500 mt-8 ">
         <p id="time-text"class="mx-auto flex justify-center text-9xl">00:00</p>
       </div>
-      <div class="flex gap-x-32 h-24 rounded-xl bg-cyan-500 mt-8">
-        <button class="flex-1 rounded-xl bg-green-600 ml-4 m-4" onclick="changePauseState();" >PL/PA</button>
-        <button class="flex-1 rounded-xl bg-red-600 mr-4 m-4" onclick="endTime();">FINISH</button>
+      <div class="flex gap-x-16 h-24 rounded-xl bg-cyan-500 mt-8">
+        <button class="flex-1 rounded-xl bg-green-600 m-4" onclick="changePauseState();">PL/PA</button>
+        <button class="flex-1 rounded-xl bg-cyan-800 m-4">Tasks</button>
+        <button class="flex-1 rounded-xl bg-red-600 m-4" onclick="endTime();">FINISH</button>
       </div>
       <div class="h-32 rounded-xl bg-cyan-500 mt-8 grid grid-cols-3">
         <button onclick="setTime(900);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
