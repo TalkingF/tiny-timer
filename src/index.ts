@@ -198,10 +198,46 @@ function retrieveTasks(): string[] {
   return task_array  
 }
 
+//onclick function for toggling task accordion content
+function toggleVisibility(id: string) {
+  let body = document.getElementById(id);  
+  if (body != null && document.getElementById(id + '-body') === null) {
+    body.innerHTML += `
+    <div id="${id}-body" class="bg-green-500">
+      <p> content </p>
+    </div>`
+  }
+  else if (body != null && document.getElementById(id + '-body') != null) {
+    document.getElementById(id + '-body')!.innerHTML = ``;
+  }
+}
+
+//renders tasks as a series of accordions
+function renderTasks() {
+  let task_box = document.getElementById('preset-tasks');
+  task_box!.innerHTML = ``;
+  task_box?.classList.remove('grid-cols-3');
+  task_box?.classList.replace('grid', 'flex');
+  const tasks: string[] = retrieveTasks();
+  let id_number = 0;
+  tasks.forEach(() => {
+    task_box!.innerHTML += `
+    <div id="${id_number}">
+      <div class="bg-red-500" onclick="toggleVisibility(this.id);">
+        <p> title </p>
+      </div>
+    </div>`
+    id_number++;
+  })
+  
+}
+
 //function to modify view between time presets and view of tasks.
 function switchPresetAndTasks() {
   const box_element = document.getElementById('preset-tasks');
   if (current_state == State.Timer && box_element != null) {
+    box_element.classList.add('grid-cols-3');
+    box_element.classList.replace('flex', 'grid');
     box_element.innerHTML = `<button onclick="setTime(900);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
     <p>15:00</p>
    </button>
@@ -221,8 +257,7 @@ function switchPresetAndTasks() {
      <p>99:59</p>
     </button>`;
   } else if (current_state == State.Tasks && box_element != null) {
-    const tasks: string[] = retrieveTasks();
-    //render tasks
+    renderTasks();
   }
 }
 
