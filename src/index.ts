@@ -4,6 +4,14 @@ enum State {
   Tasks,
 }
 
+//defines interface for tasks the user can create, which is stored in local storage
+interface Task {
+  title: string;
+  body: string;
+  category: string;
+  time_created: number; //stored as a unix timestamp.
+}
+
 //global variables
 let current_state = State.Timer; //state of application
 let pause = true; //pause state
@@ -133,14 +141,6 @@ function switchChangeTimeandCategory() {
   }
 }
 
-//render icons for creation and deletion of tasks and is called through renderState.
-function renderTaskManagement() {
-  if (current_state === State.Timer) {
-    
-  }
-
-}
-
 //function to modify appearance of webpage when the timer/task state is changed.
 function switchDockIcons() {
   const state_element = document.getElementById('timer-task');
@@ -156,14 +156,12 @@ function switchDockIcons() {
     }
 
     if (stop_element != null) {
-      stop_element.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 4h-10a3 3 0 0 0 -3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3 -3v-10a3 3 0 0 0 -3 -3z" stroke-width="0" fill="#ffffff" /></svg>'
+      stop_element.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 4h-10a3 3 0 0 0 -3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3 -3v-10a3 3 0 0 0 -3 -3z" stroke-width="0" fill="#ffffff" /></svg>';
     }
-
-  }
-  else if (current_state === State.Tasks && state_element != null) {
+  } else if (current_state === State.Tasks && state_element != null) {
     if (state_element != null) {
       state_element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" /><path d="M13 8l2 0" /><path d="M13 12l2 0" /></svg>`;
-      renderTaskManagement();
     }
     if (play_element != null) {
       play_element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.828 2a3 3 0 0 1 1.977 .743l.145 .136l1.171 1.17a3 3 0 0 1 .136 4.1l-.136 .144l-1.706 1.707l2.292 2.293a1 1 0 0 1 .083 1.32l-.083 .094l-4 4a1 1 0 0 1 -1.497 -1.32l.083 -.094l3.292 -3.293l-1.586 -1.585l-7.464 7.464a3.828 3.828 0 0 1 -2.474 1.114l-.233 .008c-.674 0 -1.33 -.178 -1.905 -.508l-1.216 1.214a1 1 0 0 1 -1.497 -1.32l.083 -.094l1.214 -1.216a3.828 3.828 0 0 1 .454 -4.442l.16 -.17l10.586 -10.586a3 3 0 0 1 1.923 -.873l.198 -.006zm0 2a1 1 0 0 0 -.608 .206l-.099 .087l-1.707 1.707l2.586 2.585l1.707 -1.706a1 1 0 0 0 .284 -.576l.01 -.131a1 1 0 0 0 -.207 -.609l-.087 -.099l-1.171 -1.171a1 1 0 0 0 -.708 -.293z" stroke-width="0" fill="currentColor" /></svg>`;
@@ -172,7 +170,59 @@ function switchDockIcons() {
     if (stop_element != null) {
       stop_element.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" stroke-width="0" fill="#ffffff" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" stroke-width="0" fill="#ffffff" /></svg>`;
     }
+  }
+}
 
+//creates a new task and writes it to local storage at the next available index.
+
+function writeTask(task_title: string, task_body: string, task_category: string = 'default') {
+  const new_task: Task = {
+    title: task_title,
+    body: task_body,
+    category: task_category,
+    time_created: Date.now(),
+  };
+  localStorage.setItem(localStorage.length.toString(), JSON.stringify(new_task));
+}
+
+/*returns an array of strings representing all tasks saved to local storage. Will return an array
+regardless if there is any tasks stored. */
+function retrieveTasks(): string[] {
+  let task_array: string[] = [];
+  let index = 0;
+  let current_task = localStorage.getItem(index.toString());
+  while (typeof current_task === 'string') {
+    task_array.push(current_task);
+    index++;
+  }
+  return task_array  
+}
+
+//function to modify view between time presets and view of tasks.
+function switchPresetAndTasks() {
+  const box_element = document.getElementById('preset-tasks');
+  if (current_state == State.Timer && box_element != null) {
+    box_element.innerHTML = `<button onclick="setTime(900);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
+    <p>15:00</p>
+   </button>
+   <button onclick="setTime(1500);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
+     <p>25:00</p>
+    </button>
+    <button onclick="setTime(1800);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
+     <p>30:00</p>
+    </button>
+    <button onclick="setTime(2700);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
+     <p>45:00</p>
+    </button>
+    <button onclick="setTime(3600);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
+     <p>60:00</p>
+    </button>
+    <button onclick="setTime(5999);"class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
+     <p>99:59</p>
+    </button>`;
+  } else if (current_state == State.Tasks && box_element != null) {
+    const tasks: string[] = retrieveTasks();
+    //render tasks
   }
 }
 
