@@ -27,17 +27,17 @@
           <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-down-line-filled" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="#a5f4fc" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5l-.117 .007a1 1 0 0 0 -.883 .993v4.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-4.999a1 1 0 0 0 -1 -1h-6z" stroke-width="0" fill="#a5f4fc" /><path d="M15 2a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="#a5f4fc" /></svg>
         </button>
       </div>
-      <div class="rounded-xl bg-cyan-500 mt-8 ">
-        <p id="time-text"class="mx-auto flex justify-center text-9xl">00:00</p>
+      <div id="timer-new-task" class="rounded-xl bg-cyan-500 mt-8">
+        <p id="timer-text"class="mx-auto flex justify-center text-9xl">00:00</p>
       </div>
       <div class="flex gap-x-4 h-24 rounded-xl bg-cyan-500 mt-8">
-        <button id="play-pause" class="flex-1 hover:flex-[1.05_1.05_0%] rounded-xl bg-green-600 m-2 hover:shadow-lg eease-in-out duration-300" onclick="changePauseState();">
+        <button id="play-pause" class="flex-1 hover:flex-[1.05_1.05_0%] rounded-xl bg-green-600 m-2 hover:shadow-lg eease-in-out duration-300" onclick="dockDispatch(this.id);">
           <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" stroke-width="0" fill="#ffffff" /></svg>
         </button>
-        <button id="timer-task" class="flex-1 hover:flex-[1.05_1.05_0%] rounded-xl bg-cyan-800 m-2 hover:shadow-lg ease-in-out duration-300" onclick="switchState();">
+        <button id="timer-task" class="flex-1 hover:flex-[1.05_1.05_0%] rounded-xl bg-cyan-800 m-2 hover:shadow-lg ease-in-out duration-300" onclick="dockDispatch(this.id);">
           <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 13m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M12 10l0 3l2 0" /><path d="M7 4l-2.75 2" /><path d="M17 4l2.75 2" /></svg>
         </button>
-        <button id="stop-delete" class="flex-1 hover:flex-[1.05_1.05_0%] rounded-xl bg-red-600 m-2 hover:shadow-lg ease-in-out duration-300" onclick="endTime();">
+        <button id="stop-delete" class="flex-1 hover:flex-[1.05_1.05_0%] rounded-xl bg-red-600 m-2 hover:shadow-lg ease-in-out duration-300" onclick="dockDispatch(this.id);">
           <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="46" height="46" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 4h-10a3 3 0 0 0 -3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3 -3v-10a3 3 0 0 0 -3 -3z" stroke-width="0" fill="#ffffff" /></svg>
         </button>
       </div>

@@ -1,3 +1,4 @@
+localStorage.clear();
 //defintion of possible state values that the application can take
 enum State {
   Timer,
@@ -41,7 +42,7 @@ function changePauseState() {
 Function aslso checks pause global variable as changed in changePauseState.*/
 async function setTimer(time_length: number) {
   time = time_length;
-  let time_element = document?.getElementById('time-text');
+  let time_element = document?.getElementById('timer-text');
   if (time_element != null) {
     while (time > 0 && !pause) {
       renderTime();
@@ -62,7 +63,7 @@ function endTime() {
 /*renders the value of (global variable) to DOM in correct time format.
 Returns false if div containing time can not be found.*/
 function renderTime() {
-  let time_element = document?.getElementById('time-text');
+  let time_element = document?.getElementById('timer-text');
   if (time_element != null) {
     time_element.innerText =
       Math.floor(time / 60).toLocaleString('en-Us', {
@@ -187,28 +188,38 @@ function writeTask(task_title: string, task_body: string, task_category: string 
 
 /*returns an array of strings representing all tasks saved to local storage. Will return an array
 regardless if there is any tasks stored. */
-function retrieveTasks(): string[] {
+function retrieveTasks(task_index?: string): string[] {
   let task_array: string[] = [];
   let index = 0;
-  let current_task = localStorage.getItem(index.toString());
-  while (typeof current_task === 'string') {
-    task_array.push(current_task);
-    index++;
+  let current_task;
+  if (typeof task_index !== 'undefined') {
+    current_task = localStorage.getItem(task_index);
+    if (typeof current_task === 'string') task_array.push(current_task);
   }
+  else {
+    current_task = localStorage.getItem(index.toString());
+    while (typeof current_task === 'string') {
+      task_array.push(current_task);
+      index++;
+      current_task = localStorage.getItem(index.toString());
+    }
+  }
+
   return task_array  
 }
 
 //onclick function for toggling task accordion content
 function toggleVisibility(id: string) {
-  let body = document.getElementById(id);  
+  let body = document.getElementById(id); 
+  const content = JSON.parse(retrieveTasks(id)[0]);
   if (body != null && document.getElementById(id + '-body') === null) {
     body.innerHTML += `
     <div id="${id}-body" class="bg-green-500">
-      <p> content </p>
-    </div>`
+      <p> ${content.body}</p>
+    </div>`;
   }
   else if (body != null && document.getElementById(id + '-body') != null) {
-    document.getElementById(id + '-body')!.innerHTML = ``;
+    document.getElementById(id + '-body')?.remove();
   }
 }
 
@@ -220,13 +231,12 @@ function renderTasks() {
   task_box?.classList.replace('grid', 'flex');
   const tasks: string[] = retrieveTasks();
   let id_number = 0;
-  tasks.forEach(() => {
+  tasks.forEach((element: string) => {
+    let task = JSON.parse(element);
     task_box!.innerHTML += `
-    <div id="${id_number}">
-      <div class="bg-red-500" onclick="toggleVisibility(this.id);">
-        <p> title </p>
-      </div>
-    </div>`
+      <div id="${id_number}" class="block bg-red-500" onclick="toggleVisibility(this.id);">
+        <p> ${task.title} </p>
+      </div>`;
     id_number++;
   })
   
@@ -267,4 +277,34 @@ function switchState() {
   current_state = (current_state + 1) % 2;
   switchDockIcons();
   switchChangeTimeandCategory();
+  switchPresetAndTasks();
+}
+
+//renders new task screen 
+function renderCreateNewTask() {
+  document.getElementById('timer-text')?.remove();
+  let anchor_element = document.getElementById('timer-new-task');
+  anchor_element?.classList.add('h-48');
+  anchor_element!.innerHTML = `
+    <input type="text" id="title" name="title" placeholder="title" size="48" class="block mx-auto rounded-xl mt-4"></input>
+    <textarea type="text" id="body" name="body" placeholder="body" size="48" class="text-black block mx-auto rounded-xl mt-4 resize-none"> </textarea>
+    <button onclick="writeTask(document.getElementById('title').value, 
+    document.getElementById('body').value);"> submit</button>`;
+  
+}
+
+//dispatches various functions based on parameter and state
+function dockDispatch(button: string) {
+  switch (button) {
+    case 'play-pause': 
+      current_state == State.Timer ? changePauseState() : renderCreateNewTask();
+      break;
+    case 'timer-task':
+      switchState();
+      break;
+    case 'stop-delete':
+      endTime();
+      break;
+  }
+
 }
