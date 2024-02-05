@@ -286,10 +286,10 @@ function renderCreateNewTask() {
   let anchor_element = document.getElementById('timer-new-task');
   anchor_element?.classList.add('h-48');
   anchor_element!.innerHTML = `
-    <input type="text" id="title" name="title" placeholder="title" size="48" class="block mx-auto rounded-xl mt-4"></input>
-    <textarea type="text" id="body" name="body" placeholder="body" size="48" class="text-black block mx-auto rounded-xl mt-4 resize-none"> </textarea>
+    <input type="text" id="title" name="title" placeholder="title" size="48" class="text-black block mx-auto rounded-xl mt-4 w-72" mt-4></input>
+    <textarea type="text" id="body" name="body" placeholder="body" size="48" class="text-black block mx-auto rounded-xl mt-4 resize-none h-24 w-72 p-1"></textarea>
     <button onclick="writeTask(document.getElementById('title').value, 
-    document.getElementById('body').value);"> submit</button>`;
+    document.getElementById('body').value);" class="rounded-xl bg-cyan-800 bg-opacity-30 mt-4 mx-auto block w-20 h-8 hover:shadow-lg ease-in-out duration-300"> submit</button>`;
   
 }
 
