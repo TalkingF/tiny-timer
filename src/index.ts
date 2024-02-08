@@ -9,7 +9,7 @@ enum State {
 interface Task {
   title: string;
   body: string;
-  category: string;
+  category: number;
   time_created: number; //stored as a unix timestamp.
 }
 
@@ -114,7 +114,6 @@ function selectCategory(selected_category: string) {
 //dispatches changeTime and category selection functions depending on global state.
 function dispatchChangeTimeCategory(time: number) {
   //time state
-  console.log(current_state);
   if (current_state == State.Timer) changeTime(time);
   else {
     switch (time) {
@@ -234,7 +233,7 @@ function switchDockIcons() {
 
 //creates a new task and writes it to local storage at the next available index.
 
-function writeTask(task_title: string, task_body: string, task_category: string = 'default') {
+function writeTask(task_title: string, task_body: string, task_category: number) {
   const new_task: Task = {
     title: task_title,
     body: task_body,
@@ -288,15 +287,41 @@ function renderTasks() {
   task_box?.classList.remove('grid-cols-3', 'grid');
   const tasks: string[] = retrieveTasks();
   let id_number = 0;
+
   tasks.forEach((element: string) => {
     let task = JSON.parse(element);
     task_box!.innerHTML += `
-      <div id="${id_number}" class="block mx-auto h-8 min-w-full bg-cyan-800 bg-opacity-30 rounded-t-m mt-4" onclick="toggleVisibility(this.id);">
+      <div id="${id_number}" class="block mx-auto h-8 min-w-full bg-opacity-75 rounded-t-m mt-4" onclick="toggleVisibility(this.id);">
         <p> ${task.title} </p>
       </div>`;
     id_number++;
+
+    const category_colour = [
+      'bg-orange-500',
+      'bg-green-600',
+      'bg-pink-600',
+      'bg-red-600'
+    ]
+    
+    switch (task.category) {
+      case 1: 
+        task_box?.classList.add(category_colour[0]);
+        break;
+      case 2: 
+        task_box?.classList.add(category_colour[1]);
+        break;
+      case 3: 
+        task_box?.classList.add(category_colour[2]);
+        break;
+      case 4: 
+        task_box?.classList.add(category_colour[3]);
+        break;
+      default: 
+        task_box?.classList.remove('bg-opacity-75');
+        task_box?.classList.add('bg-cyan-800' , 'bg-opacity-30');
+        
+    }
   })
-  
 }
 
 //function to modify view between time presets and view of tasks.
@@ -345,6 +370,23 @@ function switchState() {
   if (current_state === State.Timer) renderTimer();
 }
 
+//itterates trhough category buttons checking if one is highlighted returning its name if true.
+function getCategory() {
+  const components = [
+    document?.getElementById('um-cat1'),
+    document?.getElementById('us-cat2'),
+    document?.getElementById('dm-cat3'),
+    document?.getElementById('ds-cat4'),
+  ];
+
+  for (let index = 0; index < 4; index++) {
+    if (components[index]?.classList.contains('bg-cyan-800') === false) {
+      return (index + 1);
+    }
+  }
+  return -1;
+}
+
 //renders new task screen.
 function renderCreateNewTask() {
   document.getElementById('timer-text')?.remove();
@@ -354,7 +396,7 @@ function renderCreateNewTask() {
     <input type="text" id="title" name="title" placeholder="title" size="48" class="text-black block mx-auto rounded-xl mt-4 w-72" mt-4></input>
     <textarea type="text" id="body" name="body" placeholder="body" size="48" class="text-black block mx-auto rounded-xl mt-4 resize-none h-24 w-72 p-1"></textarea>
     <button onclick="writeTask(document.getElementById('title').value, 
-    document.getElementById('body').value); renderTasks();" class="rounded-xl bg-cyan-800 bg-opacity-30 mt-4 mx-auto block w-20 h-8 hover:shadow-lg ease-in-out duration-300"> submit</button>`;
+    document.getElementById('body').value, getCategory()); renderTasks();" class="rounded-xl bg-cyan-800 bg-opacity-30 mt-4 mx-auto block w-20 h-8 hover:shadow-lg ease-in-out duration-300"> submit</button>`;
   
 }
 
@@ -375,7 +417,6 @@ function dockDispatch(button: string) {
       break;
     case 'stop-delete':
       current_state == State.Timer ? endTime() : deleteTasks();
-      
       break;
   }
 
