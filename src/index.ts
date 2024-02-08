@@ -287,7 +287,7 @@ function switchState() {
   if (current_state === State.Timer) renderTimer();
 }
 
-//renders new task screen 
+//renders new task screen.
 function renderCreateNewTask() {
   document.getElementById('timer-text')?.remove();
   let anchor_element = document.getElementById('timer-new-task');
@@ -300,7 +300,13 @@ function renderCreateNewTask() {
   
 }
 
-//dispatches various functions based on parameter and state
+//deletes all tasks and updates render of tasks.
+function deleteTasks() {
+  localStorage.clear();
+  renderTasks();
+}
+
+//dispatches various functions based on parameter and state.
 function dockDispatch(button: string) {
   switch (button) {
     case 'play-pause': 
@@ -310,7 +316,8 @@ function dockDispatch(button: string) {
       switchState();
       break;
     case 'stop-delete':
-      endTime();
+      current_state == State.Timer ? endTime() : deleteTasks();
+      
       break;
   }
 
