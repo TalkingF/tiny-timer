@@ -214,7 +214,7 @@ function toggleVisibility(id: string) {
   const content = JSON.parse(retrieveTasks(id)[0]);
   if (body != null && document.getElementById(id + '-body') === null) {
     body.innerHTML += `
-    <div id="${id}-body" class="bg-green-500">
+    <div id="${id}-body" class=" mt-2 bg-cyan-700 bg-opacity-30">
       <p> ${content.body}</p>
     </div>`;
   }
@@ -227,14 +227,13 @@ function toggleVisibility(id: string) {
 function renderTasks() {
   let task_box = document.getElementById('preset-tasks');
   task_box!.innerHTML = ``;
-  task_box?.classList.remove('grid-cols-3');
-  task_box?.classList.replace('grid', 'flex');
+  task_box?.classList.remove('grid-cols-3', 'grid');
   const tasks: string[] = retrieveTasks();
   let id_number = 0;
   tasks.forEach((element: string) => {
     let task = JSON.parse(element);
     task_box!.innerHTML += `
-      <div id="${id_number}" class="block bg-red-500" onclick="toggleVisibility(this.id);">
+      <div id="${id_number}" class="block mx-auto h-8 min-w-full bg-cyan-800 bg-opacity-30 rounded-t-m mt-4" onclick="toggleVisibility(this.id);">
         <p> ${task.title} </p>
       </div>`;
     id_number++;
@@ -246,8 +245,7 @@ function renderTasks() {
 function switchPresetAndTasks() {
   const box_element = document.getElementById('preset-tasks');
   if (current_state == State.Timer && box_element != null) {
-    box_element.classList.add('grid-cols-3');
-    box_element.classList.replace('flex', 'grid');
+    box_element.classList.add('grid-cols-3', 'grid');
     box_element.innerHTML = `<button onclick="setTime(900);" class="bg-cyan-800 bg-opacity-30 m-1 rounded-xl hover:shadow-lg ease-in-out duration-300" onclick="changeTime(-60);">
     <p>15:00</p>
    </button>
@@ -271,6 +269,14 @@ function switchPresetAndTasks() {
   }
 }
 
+//renders timer after rendering the new task menu is no longer needed.
+function renderTimer() {
+  let timer_element = document.getElementById('timer-new-task');
+  timer_element?.classList.remove('h-48');
+  timer_element!.innerHTML = `<p id="timer-text"class="mx-auto flex justify-center text-9xl"></p>`;
+  renderTime();
+}
+
 /*switchState is responsible for switching state between timer and tasks and is an onclick function.
 The function dispatches several functions responsible for changing the state of each component.*/
 function switchState() {
@@ -278,6 +284,7 @@ function switchState() {
   switchDockIcons();
   switchChangeTimeandCategory();
   switchPresetAndTasks();
+  if (current_state === State.Timer) renderTimer();
 }
 
 //renders new task screen 
@@ -289,7 +296,7 @@ function renderCreateNewTask() {
     <input type="text" id="title" name="title" placeholder="title" size="48" class="text-black block mx-auto rounded-xl mt-4 w-72" mt-4></input>
     <textarea type="text" id="body" name="body" placeholder="body" size="48" class="text-black block mx-auto rounded-xl mt-4 resize-none h-24 w-72 p-1"></textarea>
     <button onclick="writeTask(document.getElementById('title').value, 
-    document.getElementById('body').value);" class="rounded-xl bg-cyan-800 bg-opacity-30 mt-4 mx-auto block w-20 h-8 hover:shadow-lg ease-in-out duration-300"> submit</button>`;
+    document.getElementById('body').value); renderTasks();" class="rounded-xl bg-cyan-800 bg-opacity-30 mt-4 mx-auto block w-20 h-8 hover:shadow-lg ease-in-out duration-300"> submit</button>`;
   
 }
 
