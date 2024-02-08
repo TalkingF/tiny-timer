@@ -1,4 +1,3 @@
-localStorage.clear();
 //defintion of possible state values that the application can take
 enum State {
   Timer,
@@ -271,7 +270,7 @@ function toggleVisibility(id: string) {
   const content = JSON.parse(retrieveTasks(id)[0]);
   if (body != null && document.getElementById(id + '-body') === null) {
     body.innerHTML += `
-    <div id="${id}-body" class=" mt-2 bg-cyan-700 bg-opacity-30">
+    <div id="${id}-body" class="bg-cyan-700 bg-opacity-30 flex">
       <p> ${content.body}</p>
     </div>`;
   }
@@ -285,16 +284,16 @@ function renderTasks() {
   let task_box = document.getElementById('preset-tasks');
   task_box!.innerHTML = ``;
   task_box?.classList.remove('grid-cols-3', 'grid');
+  task_box?.classList.add('flex', 'flex-col', 'grow');
   const tasks: string[] = retrieveTasks();
   let id_number = 0;
 
   tasks.forEach((element: string) => {
     let task = JSON.parse(element);
     task_box!.innerHTML += `
-      <div id="${id_number}" class="block mx-auto h-8 min-w-full bg-opacity-75 rounded-t-m mt-4" onclick="toggleVisibility(this.id);">
+      <div id="${id_number}" class="flex-auto mx-auto h-6 min-w-full bg-opacity-75 rounded-t-m mt-3" onclick="toggleVisibility(this.id);">
         <p> ${task.title} </p>
       </div>`;
-    id_number++;
 
     const category_colour = [
       'bg-orange-500',
@@ -302,25 +301,25 @@ function renderTasks() {
       'bg-pink-600',
       'bg-red-600'
     ]
-    
+    let this_task = document.getElementById(`${id_number}`);
     switch (task.category) {
       case 1: 
-        task_box?.classList.add(category_colour[0]);
+        this_task?.classList.add(category_colour[0]);
         break;
       case 2: 
-        task_box?.classList.add(category_colour[1]);
+        this_task?.classList.add(category_colour[1]);
         break;
       case 3: 
-        task_box?.classList.add(category_colour[2]);
+        this_task?.classList.add(category_colour[2]);
         break;
       case 4: 
-        task_box?.classList.add(category_colour[3]);
+        this_task?.classList.add(category_colour[3]);
         break;
       default: 
-        task_box?.classList.remove('bg-opacity-75');
-        task_box?.classList.add('bg-cyan-800' , 'bg-opacity-30');
-        
+        this_task?.classList.remove('bg-opacity-75');
+        this_task?.classList.add('bg-cyan-800' , 'bg-opacity-30');    
     }
+    id_number++;
   })
 }
 
