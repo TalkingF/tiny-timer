@@ -76,6 +76,64 @@ function renderTime() {
   return false;
 }
 
+function selectCategory(selected_category: string) {
+  //captures category elements
+  const components = [
+    document?.getElementById('um-cat1'),
+    document?.getElementById('us-cat2'),
+    document?.getElementById('dm-cat3'),
+    document?.getElementById('ds-cat4'),
+  ];
+  
+  //each categories colour
+  const category_colour = [
+    'bg-orange-500',
+    'bg-green-600',
+    'bg-pink-600',
+    'bg-red-600'
+  ]
+
+  //ensure every category is in its default state.
+  for (let index = 0; index < 4; index++) {
+    if (components[index] != null) {
+      components[index]?.classList.remove(category_colour[index], 'bg-opactiy-75');
+      components[index]?.classList.add('bg-cyan-800', 'bg-opacity-30');
+    }
+  }
+
+  //update selected category with its corresponding colour
+  for (let index = 0; index < 4; index++) {
+    if (selected_category === `cat-${index + 1}`) {
+      components[index]?.classList.remove('bg-cyan-800', 'bg-opacity-30');
+      components[index]?.classList.add(category_colour[index], 'bg-opacity-75');
+      break;
+    }
+  }
+}
+
+//dispatches changeTime and category selection functions depending on global state.
+function dispatchChangeTimeCategory(time: number) {
+  //time state
+  console.log(current_state);
+  if (current_state == State.Timer) changeTime(time);
+  else {
+    switch (time) {
+      case 60:
+        selectCategory('cat-1');
+        break;
+      case 1:
+        selectCategory('cat-2');
+        break;
+      case -60:
+        selectCategory('cat-3');
+        break;
+      case -1:
+        selectCategory('cat-4');
+        break;
+    }
+  }
+}
+
 /*onlcick function for setting length of timer, ensures that time stays within bounds.
 Calls renderTimer for visual feedback after updating time.*/
 function changeTime(magnitude: number) {
